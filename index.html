@@ -410,4 +410,117 @@
                         <div class="settings-info">
                             <div class="settings-title">Daily Goal</div>
                             <div class="settings-desc" id="settingsGoal">4 hours per day</div>
-                        </
+                        </div>
+                    </div>
+                    <div class="settings-item" onclick="showPrivacy()">
+                        <div class="settings-icon">🔒</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Privacy Policy</div>
+                            <div class="settings-desc">View our privacy policy</div>
+                        </div>
+                    </div>
+                    <div class="settings-item" onclick="showTerms()">
+                        <div class="settings-icon">📄</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Terms of Service</div>
+                            <div class="settings-desc">View terms and conditions</div>
+                        </div>
+                    </div>
+                    <div class="settings-item" onclick="clearAllData()" style="background:#fee2e2">
+                        <div class="settings-icon" style="background:#ef4444">🗑️</div>
+                        <div class="settings-info">
+                            <div class="settings-title">Clear All Data</div>
+                            <div class="settings-desc">Delete all your data from this session</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="privacyScreen" class="legal-modal">
+            <div class="legal-content">
+                <button onclick="hidePrivacy()" class="close-legal-btn">✕ Close</button>
+                <h1>Privacy Policy</h1>
+                <p><strong>Last Updated:</strong> January 2025</p>
+                <p><strong>Age Requirement:</strong> You must be 13 years or older to use this app.</p>
+
+                <h2>1. Introduction</h2>
+                <p>Digital Detox Champion is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our screen time tracking application.</p>
+
+                <h2>2. Information We Collect</h2>
+                <p>We collect only the information you manually enter into the app during your session.</p>
+
+                <h2>3. How We Store Your Data</h2>
+                <p><strong>Session Storage Only:</strong> All your data is stored temporarily in your browser session. Data is cleared when you close the browser or clear your session.</p>
+
+                <h2>4. Third-Party Services</h2>
+                <p><strong>Google AdSense:</strong> We use Google AdSense to display advertisements. For more information, see Google's Privacy Policy.</p>
+
+                <h2>5. Contact Us</h2>
+                <p>If you have questions about this Privacy Policy, please contact us at: support@digitaldetoxchampion.app</p>
+                <button onclick="hidePrivacy()" class="close-legal-btn">✕ Close</button>
+            </div>
+        </div>
+
+        <div id="termsScreen" class="legal-modal">
+            <div class="legal-content">
+                <button onclick="hideTerms()" class="close-legal-btn">✕ Close</button>
+                <h1>Terms of Service</h1>
+                <p><strong>Last Updated:</strong> January 2025</p>
+                <p><strong>Age Requirement:</strong> You must be 13 years or older to use this service.</p>
+
+                <h2>1. Acceptance of Terms</h2>
+                <p>By accessing and using Digital Detox Champion, you agree to be bound by these Terms of Service.</p>
+
+                <h2>2. Description of Service</h2>
+                <p>Digital Detox Champion is a screen time tracking application that helps users monitor and manage their digital device usage.</p>
+
+                <h2>3. Disclaimer</h2>
+                <p>The app is provided "as is" without warranties. This is not medical advice.</p>
+
+                <h2>4. Contact</h2>
+                <p>For questions: support@digitaldetoxchampion.app</p>
+                
+                <button onclick="hideTerms()" class="close-legal-btn">✕ Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        © 2025 Digital Detox Champion | Ages 13+ | 
+        <span onclick="showPrivacy()" style="color:#6366f1;cursor:pointer;text-decoration:underline">Privacy</span> | 
+        <span onclick="showTerms()" style="color:#6366f1;cursor:pointer;text-decoration:underline">Terms</span>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="switchTab('home')">
+            <div class="nav-icon">🏠</div>
+            <div class="nav-label">Home</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('history')">
+            <div class="nav-icon">📊</div>
+            <div class="nav-label">History</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('stats')">
+            <div class="nav-icon">🏆</div>
+            <div class="nav-label">Stats</div>
+        </div>
+        <div class="nav-item" onclick="switchTab('settings')">
+            <div class="nav-icon">⚙️</div>
+            <div class="nav-label">Settings</div>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    <div class="popup" id="popup">
+        <div class="popup-icon" id="popupIcon">🎉</div>
+        <h2 style="color: #1f2937; margin-bottom: 10px;" id="popupTitle">Great!</h2>
+        <p style="color: #6b7280;" id="popupMessage"></p>
+        <button class="btn" onclick="closePopup()" style="margin-top: 20px;">Awesome!</button>
+    </div>
+
+    <script>
+var userData={name:'',email:'',goal:4,points:0,streak:0,rank:999,challenges:0,days:{}};var challenges=[{id:1,title:"2-Hour Phone-Free Focus",desc:"No phone for 2 hours",points:100,icon:"💼"},{id:2,title:"Phone-Free Dinner",desc:"Enjoy meals without phone",points:50,icon:"🍽️"},{id:3,title:"Bedtime Digital Detox",desc:"1 hour before sleep",points:75,icon:"🌙"},{id:4,title:"Morning Without Phone",desc:"Start day phone-free",points:60,icon:"🌅"}];function getToday(){var d=new Date();var y=d.getFullYear();var m=d.getMonth()+1;var day=d.getDate();return y+'-'+(m<10?'0'+m:m)+'-'+(day<10?'0'+day:day)}function validateHours(el){var v=parseInt(el.value)||0;if(v<0)v=0;if(v>24)v=24;el.value=v}function validateMins(el){var v=parseInt(el.value)||0;if(v<0)v=0;if(v>59)v=59;el.value=v}function cleanOldDays(){var t=new Date();var c=new Date(t);c.setDate(c.getDate()-7);var nd={};for(var date in userData.days){if(new Date(date)>=c)nd[date]=userData.days[date]}userData.days=nd}function updateTodayDisplay(){var today=getToday();var dd=userData.days[today]||{total:0};var h=Math.floor(dd.total/60);var m=dd.total%60;document.getElementById('todayTotal').textContent=h+'h '+m+'m'}function updateUI(){document.getElementById('displayName').textContent=userData.name||'Champion';document.getElementById('totalPoints').textContent=userData.points;document.getElementById('currentStreak').textContent=userData.streak;document.getElementById('globalRank').textContent=userData.rank;document.getElementById('challengesDone').textContent=userData.challenges;document.getElementById('settingsName').textContent=userData.name||'User';document.getElementById('settingsEmail').textContent=userData.email||'email@example.com';document.getElementById('settingsGoal').textContent=userData.goal+' hours per day';updateTodayDisplay();var dc=Object.keys(userData.days).length;document.getElementById('totalDays').textContent=dc;var tm=0;for(var d in userData.days){tm+=userData.days[d].total}var avg=dc>0?(tm/60/dc).toFixed(1):0;document.getElementById('avgTime').textContent=avg+'h'}function renderChallenges(){var html='';for(var i=0;i<challenges.length;i++){var c=challenges[i];html+='<div class="challenge-item" id="ch'+c.id+'"><div class="challenge-header"><div class="challenge-title">'+c.icon+' '+c.title+'</div><div class="challenge-points">+'+c.points+' pts</div></div><div class="challenge-desc">'+c.desc+'</div><div class="challenge-actions"><button class="btn-small btn-complete" onclick="completeChallenge('+c.id+','+c.points+')">✓ Completed</button><button class="btn-small btn-fail" onclick="failChallenge('+c.id+')">✗ Failed</button></div></div>'}document.getElementById('challengesList').innerHTML=html}function renderHistory(){var dates=[];for(var d in userData.days){dates.push(d)}dates.sort().reverse();var html='';if(dates.length===0){html='<p style="color:#6b7280;text-align:center;padding:20px;">No data yet!</p>'}else{var apps=['youtube','facebook','instagram','whatsapp','games','other'];var icons=['📺','📘','📸','💬','🎮','📱'];var names=['YouTube','Facebook','Instagram','WhatsApp','Games','Other'];for(var i=0;i<dates.length;i++){var date=dates[i];var data=userData.days[date];var d=new Date(date);var ds=d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});var th=(data.total/60).toFixed(1);html+='<div class="day-entry"><div class="day-header"><div class="day-date">'+ds+'</div><div class="day-total">'+th+'h</div></div><div class="day-apps">';for(var j=0;j<apps.length;j++){if(data[apps[j]]&&data[apps[j]]>0){html+='<div class="app-stat">'+icons[j]+' '+names[j]+': <strong>'+(data[apps[j]]/60).toFixed(1)+'h</strong></div>'}}html+='</div></div>'}}document.getElementById('historyList').innerHTML=html}function showPopup(msg,type){var icons={excellent:'🌟',success:'🎉',warning:'⚠️',bad:'😔'};var titles={excellent:'Excellent!',success:'Great!',warning:'Careful!',bad:'Too Much!'};document.getElementById('popupIcon').textContent=icons[type]||'🎉';document.getElementById('popupTitle').textContent=titles[type]||'Great!';document.getElementById('popupMessage').textContent=msg;document.getElementById('overlay').style.display='block';document.getElementById('popup').style.display='block'}function closePopup(){document.getElementById('overlay').style.display='none';document.getElementById('popup').style.display='none'}function calcBreakdown(){var t=0;var hs=document.querySelectorAll('.app-h');var ms=document.querySelectorAll('.app-m');for(var i=0;i<hs.length;i++){t+=(parseInt(hs[i].value)||0)*60+(parseInt(ms[i].value)||0)}var th=Math.floor(t/60);var tm=t%60;if(th>24){th=24;tm=0}document.getElementById('addHours').value=th;document.getElementById('addMins').value=tm}function handleLogin(){var n=document.getElementById('userName').value.trim();var e=document.getElementById('userEmail').value.trim();var g=parseInt(document.getElementById('goalSlider').value);if(!n||!e){alert('Enter name and email!');return}if(e.indexOf('@')===-1){alert('Valid email!');return}userData.name=n;userData.email=e;userData.goal=g;document.getElementById('welcomeScreen').classList.remove('active');document.getElementById('mainApp').classList.add('active');updateUI();renderChallenges();showPopup('Welcome '+n+'! 🚀','success')}function handleSave(){var ah=parseInt(document.getElementById('addHours').value)||0;var am=parseInt(document.getElementById('addMins').value)||0;var at=ah*60+am;if(at===0){alert('Enter time!');return}var today=getToday();if(!userData.days[today]){userData.days[today]={total:0,youtube:0,facebook:0,instagram:0,whatsapp:0,games:0,other:0}}var ct=userData.days[today].total;var nt=ct+at;if(nt>1440){alert('Max 24h/day!');return}userData.days[today].total=nt;var hs=document.querySelectorAll('.app-h');var ms=document.querySelectorAll('.app-m');var apps=['youtube','facebook','instagram','whatsapp','games','other'];for(var i=0;i<6;i++){userData.days[today][apps[i]]+=(parseInt(hs[i].value)||0)*60+(parseInt(ms[i].value)||0)}userData.points+=10;userData.rank=Math.max(1,Math.min(999,1000-Math.floor(userData.points/10)));cleanOldDays();updateUI();renderHistory();var hrs=userData.days[today].total/60;if(hrs<=userData.goal*0.7){showPopup('Awesome! '+hrs.toFixed(1)+'h today! 🌟','excellent')}else if(hrs<=userData.goal){showPopup('Great! Within goal! +10pts 🎉','success')}else if(hrs<=userData.goal*1.3){showPopup('Warning! '+(hrs-userData.goal).toFixed(1)+'h over! ⚠️','warning')}else{showPopup('Too much! '+hrs.toFixed(1)+'h! 😔','bad')}document.getElementById('addHours').value=0;document.getElementById('addMins').value=0;var all=document.querySelectorAll('.app-h,.app-m');for(var i=0;i<all.length;i++){all[i].value=0}}function completeChallenge(id,pts){userData.points+=pts;userData.challenges++;userData.rank=Math.max(1,Math.min(999,1000-Math.floor(userData.points/10)));updateUI();document.getElementById('ch'+id).querySelector('.challenge-actions').innerHTML='<div style="color:#10b981;font-weight:600;text-align:center;">✓ Done!</div>';showPopup('Challenge done! +'+pts+'pts! 🎉','success')}function failChallenge(id){document.getElementById('ch'+id).querySelector('.challenge-actions').innerHTML='<div style="color:#ef4444;font-weight:600;text-align:center;">Try tomorrow!</div>'}function switchTab(tab){var tabs=document.querySelectorAll('.tab-content');for(var i=0;i<tabs.length;i++){tabs[i].classList.remove('active')}var navs=document.querySelectorAll('.nav-item');for(var i=0;i<navs.length;i++){navs[i].classList.remove('active')}document.getElementById(tab+'Tab').classList.add('active');var navIndex=tab==='home'?0:tab==='history'?1:tab==='stats'?2:3;navs[navIndex].classList.add('active');if(tab==='history'){renderHistory()}}function showPrivacy(){document.getElementById('privacyScreen').classList.add('active')}function hidePrivacy(){document.getElementById('privacyScreen').classList.remove('active')}function showTerms(){document.getElementById('termsScreen').classList.add('active')}function hideTerms(){document.getElementById('termsScreen').classList.remove('active')}function clearAllData(){if(confirm('Are you sure? This will delete ALL your data from this session!')){userData={name:'',email:'',goal:4,points:0,streak:0,rank:999,challenges:0,days:{}};document.getElementById('mainApp').classList.remove('active');document.getElementById('welcomeScreen').classList.add('active');alert('All data cleared!')}}document.getElementById('goalSlider').addEventListener('input',function(){document.getElementById('goalValue').textContent=this.value});window.onload=function(){updateUI();renderChallenges();renderHistory()};
+    </script>
+</body>
+</html>
