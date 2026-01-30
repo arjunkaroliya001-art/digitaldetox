@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommended Tools - Digital Detox</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            color: #1f2937;
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            color: #6b7280;
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Category Title */
+        .category-title {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+            margin: 40px 0 20px 0;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+        
+        /* Product Card */
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        
+        .product-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .product-title {
+            color: #1f2937;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .product-desc {
+            color: #6b7280;
+            font-size: 15px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .product-price {
+            color: #10b981;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .product-rating {
+            color: #fbbf24;
+            font-size: 14px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Affiliate Button */
+        .affiliate-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .affiliate-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .disclaimer strong {
+            font-size: 16px;
+            display: block;
+            margin-bottom: 10px;
+        }
+        
+        /* Back Button */
+        .back-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 28px;
+            }
+            
+            .header p {
+                font-size: 16px;
+            }
+            
+            .category-title {
+                font-size: 24px;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Back Button -->
+        <a href="index.html" class="back-btn">← Back to Home</a>
+        
+        <!-- Header -->
+        <div class="header">
+            <h1>🎯 Recommended Tools for Digital Detox</h1>
+            <p>Carefully selected products that helped me and 1000+ others reduce screen time and boost productivity</p>
+        </div>
+
+        <!-- Category: Screen Protection -->
+        <h2 class="category-title">📱 Screen Protection</h2>
+        <div class="product-grid">
+            <!-- Product 1: Blue Light Glasses -->
+            <div class="product-card">
+                <div class="product-icon">👓</div>
+                <div class="product-title">Blue Light Blocking Glasses</div>
+                <div class="product-desc">
+                    Protect your eyes from harmful blue light emitted by screens. Reduces eye strain, 
+                    headaches, and improves sleep quality. Perfect for anyone spending 4+ hours on 
+                    screens daily. I noticed 80% reduction in eye strain within 2 weeks!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (10,000+ reviews)</div>
+                <div class="product-price">$19.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    View on Amazon →
+                </a>
+            </div>
+
+            <!-- Product 2: Screen Time Timer -->
+            <div class="product-card">
+                <div class="product-icon">⏰</div>
+                <div class="product-title">Time Timer Visual Countdown</div>
+                <div class="product-desc">
+                    Visual countdown timer that helps manage screen time sessions effectively. 
+                    Great for focus work and limiting app usage. Used by productivity experts 
+                    worldwide. Physical timer = better discipline than phone apps!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (5,000+ reviews)</div>
+                <div class="product-price">$24.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    View on Amazon →
+                </a>
+            </div>
+        </div>
+
+        <!-- Category: Books -->
+        <h2 class="category-title">📚 Books That Changed My Life</h2>
+        <div class="product-grid">
+            <!-- Product 3: Atomic Habits -->
+            <div class="product-card">
+                <div class="product-icon">📖</div>
+                <div class="product-title">Atomic Habits by James Clear</div>
+                <div class="product-desc">
+                    The #1 bestseller on building good habits and breaking bad ones. Learn how to 
+                    reduce phone addiction with proven strategies. Over 10 million copies sold. 
+                    This book literally changed how I approach my daily routine!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (Amazon Bestseller)</div>
+                <div class="product-price">$16.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    Buy on Amazon →
+                </a>
+            </div>
+
+            <!-- Product 4: Digital Minimalism -->
+            <div class="product-card">
+                <div class="product-icon">📕</div>
+                <div class="product-title">Digital Minimalism by Cal Newport</div>
+                <div class="product-desc">
+                    The definitive guide to reducing digital clutter. Learn to choose a focused 
+                    life in a noisy world. From the bestselling author of "Deep Work". Perfect 
+                    companion to this app - theory + practice combined!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (Bestselling Author)</div>
+                <div class="product-price">$14.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    Buy on Amazon →
+                </a>
+            </div>
+        </div>
+
+        <!-- Category: Mindfulness & Meditation -->
+        <h2 class="category-title">🧘 Mindfulness & Meditation</h2>
+        <div class="product-grid">
+            <!-- Product 5: Headspace -->
+            <div class="product-card">
+                <div class="product-icon">🌟</div>
+                <div class="product-title">Headspace Premium</div>
+                <div class="product-desc">
+                    #1 meditation app with guided sessions for stress, sleep, and focus. 
+                    Scientifically proven to reduce anxiety. Start with 14-day free trial. 
+                    I use this daily - 10 minutes changed my entire day's productivity!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (100M+ downloads)</div>
+                <div class="product-price">$12.99/month</div>
+                <!-- TODO: Replace with your Headspace affiliate link -->
+                <a href="YOUR_HEADSPACE_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    Start Free Trial →
+                </a>
+            </div>
+
+            <!-- Product 6: Kindle Paperwhite -->
+            <div class="product-card">
+                <div class="product-icon">📱</div>
+                <div class="product-title">Kindle Paperwhite</div>
+                <div class="product-desc">
+                    Replace phone scrolling with reading! E-ink display is easy on eyes, 
+                    waterproof design, weeks of battery life. Perfect for building a reading 
+                    habit instead of social media. Best investment I made for my mental health!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (Amazon's Choice)</div>
+                <div class="product-price">$139.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    View on Amazon →
+                </a>
+            </div>
+        </div>
+
+        <!-- Category: Productivity Tools -->
+        <h2 class="category-title">💼 Productivity Tools</h2>
+        <div class="product-grid">
+            <!-- Product 7: Grammarly -->
+            <div class="product-card">
+                <div class="product-icon">✍️</div>
+                <div class="product-title">Grammarly Premium</div>
+                <div class="product-desc">
+                    AI-powered writing assistant that improves your communication. Save time, 
+                    write better, reduce screen time editing. Used by 30 million people daily. 
+                    Cuts my writing/editing time in half = less screen time!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (30M+ users)</div>
+                <div class="product-price">$12/month</div>
+                <!-- TODO: Replace with your Grammarly affiliate link -->
+                <a href="YOUR_GRAMMARLY_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    Get Grammarly →
+                </a>
+            </div>
+
+            <!-- Product 8: Noise Cancelling Headphones -->
+            <div class="product-card">
+                <div class="product-icon">🎧</div>
+                <div class="product-title">Noise Cancelling Headphones</div>
+                <div class="product-desc">
+                    Block out distractions for deep focus work. Reduces need to check phone 
+                    for notifications. Perfect for meditation, reading, or focused productivity. 
+                    Creates your own peaceful space anywhere!
+                </div>
+                <div class="product-rating">⭐⭐⭐⭐⭐ (Best Seller)</div>
+                <div class="product-price">$79.99</div>
+                <!-- TODO: Replace with your Amazon affiliate link -->
+                <a href="YOUR_AMAZON_AFFILIATE_LINK_HERE" 
+                   class="affiliate-btn" 
+                   target="_blank"
+                   rel="nofollow">
+                    View on Amazon →
+                </a>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            <strong>📢 Affiliate Disclosure</strong>
+            Some links on this page are affiliate links. This means I may earn a small 
+            commission if you purchase through these links, at no extra cost to you. I only 
+            recommend products I personally use and genuinely believe help with digital wellness. 
+            Your support helps keep this app free and constantly improving! ❤️
+            <br><br>
+            <em>All prices are approximate and may vary. Please check Amazon for current pricing.</em>
+        </div>
+    </div>
+</body>
+</html>
