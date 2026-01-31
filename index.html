@@ -213,248 +213,261 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0,0,0,0.8);
+            background: white;
             z-index: 2000;
             overflow-y: auto;
-            padding: 20px;
         }
-        .legal-modal.active { display: block; }
-        .legal-content {
-            background: white;
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 30px;
-            border-radius: 15px;
-        }
-        .legal-content h1 { color: #1f2937; margin-bottom: 20px; font-size: 24px; }
-        .legal-content h2 { color: #374151; margin-top: 25px; margin-bottom: 12px; font-size: 18px; }
-        .legal-content p { color: #6b7280; line-height: 1.6; margin-bottom: 12px; font-size: 14px; }
-        .close-legal-btn {
-            display: inline-block;
-            padding: 12px 24px;
-            background: #6366f1;
+        .legal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            border-radius: 8px;
-            border: none;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 20px;
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
+        .legal-content {
+            padding: 20px;
+            line-height: 1.8;
+        }
+        .legal-content h2 { margin: 20px 0 10px; color: #1f2937; }
+        .legal-content p { margin-bottom: 15px; color: #374151; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div id="welcomeScreen" class="screen active">
-            <div class="welcome-card">
-                <div class="app-icon">📱</div>
-                <h1>Digital Detox Champion</h1>
-                <p>Take control of your screen time</p>
-                <input type="text" id="userName" placeholder="Your Name">
-                <input type="email" id="userEmail" placeholder="Email Address">
-                <div class="goal-slider">
-                    <label>Daily Screen Time Goal</label>
-                    <input type="range" id="goalSlider" min="1" max="12" value="4" style="width: 100%;">
-                    <div class="goal-value"><span id="goalValue">4</span> hours</div>
-                </div>
-                <button class="btn" onclick="handleLogin()">Login & Start 🚀</button>
-                <p style="font-size:11px;color:#9ca3af;margin-top:15px;">By using this app, you agree to our <span onclick="showPrivacy()" style="color:#6366f1;cursor:pointer;text-decoration:underline">Privacy Policy</span> and <span onclick="showTerms()" style="color:#6366f1;cursor:pointer;text-decoration:underline">Terms</span></p>
-            </div>
-        </div>
 
-        <div id="mainApp" class="screen">
+<div id="welcomeScreen" class="screen active">
+    <div class="container">
+        <div class="welcome-card">
+            <div class="app-icon">📱</div>
+            <h1>Digital Detox Champion</h1>
+            <p>Track your screen time and build healthier digital habits</p>
+            
+            <input type="text" id="userName" placeholder="Enter your name">
+            <input type="email" id="userEmail" placeholder="Enter your email">
+            
+            <div class="goal-slider">
+                <label>Daily Screen Time Goal</label>
+                <div class="goal-value" id="goalValue">4</div>
+                <input type="range" id="goalSlider" min="1" max="12" value="4" style="width:100%;">
+                <div style="font-size:12px; color:#6b7280; margin-top:10px;">hours per day</div>
+            </div>
+            
+            <button class="btn" onclick="handleLogin()">Start Your Journey 🚀</button>
+        </div>
+    </div>
+</div>
+
+<div id="mainApp" class="screen">
+    <div class="container">
+        <div class="tab-content active" id="homeTab">
             <div class="header">
-                <h1>Welcome, <span id="displayName">Champion</span>!</h1>
+                <h1>Welcome, <span id="userName2"></span>!</h1>
                 <p>Keep crushing your goals!</p>
                 <div class="user-stats">
                     <div class="stat-card">
-                        <div class="stat-value" id="totalPoints">0</div>
+                        <div class="stat-value" id="points">0</div>
                         <div class="stat-label">Points</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="currentStreak">0</div>
+                        <div class="stat-value" id="dayStreak">0</div>
                         <div class="stat-label">Day Streak 🔥</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value">#<span id="globalRank">999</span></div>
+                        <div class="stat-value" id="personalScore">#999</div>
                         <div class="stat-label">Personal Score</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-value" id="challengesDone">0</div>
+                        <div class="stat-value" id="challenges">0</div>
                         <div class="stat-label">Challenges</div>
                     </div>
                 </div>
             </div>
 
-            <div id="homeTab" class="tab-content active">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">⏱️</div>
-                        <div class="card-title">Log Today's Screen Time</div>
-                    </div>
-                    <div class="current-total">
-                        <div class="current-total-label">TODAY'S TOTAL SO FAR</div>
-                        <div class="current-total-value" id="todayTotal">0h 0m</div>
-                    </div>
-                    <div class="time-input-group">
-                        <label>Add Time:</label>
-                        <input type="number" id="addHours" min="0" max="24" value="0" onchange="validateHours(this)"> h
-                        <input type="number" id="addMins" min="0" max="59" value="0" onchange="validateMins(this)"> m
-                    </div>
-                    <div class="app-breakdown">
-                        <strong style="color: #374151; display: block; margin-bottom: 15px;">Break it down:</strong>
-                        <div class="breakdown-item">
-                            <span>📺 YouTube</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>📘 Facebook</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>📸 Instagram</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>💬 WhatsApp</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>🎮 Games</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                        <div class="breakdown-item">
-                            <span>📱 Other</span>
-                            <div class="breakdown-inputs">
-                                <input type="number" class="app-h" min="0" max="24" value="0" oninput="validateHours(this);calcBreakdown()">h
-                                <input type="number" class="app-m" min="0" max="59" value="0" oninput="validateMins(this);calcBreakdown()">m
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn" onclick="handleSave()">Add to Today's Total 💾</button>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">Log Today's Screen Time</div>
                 </div>
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">🎯</div>
-                        <div class="card-title">Today's Challenges</div>
-                    </div>
-                    <div id="challengesList"></div>
+                
+                <div class="current-total">
+                    <div class="current-total-label">TODAY'S TOTAL SO FAR</div>
+                    <div class="current-total-value" id="todayTotal">0h 0m</div>
                 </div>
+
+                <div class="time-input-group">
+                    <label>Add Time:</label>
+                    <input type="number" id="addHours" value="0" min="0" max="24">
+                    <span style="color:#374151;">h</span>
+                    <input type="number" id="addMins" value="0" min="0" max="59">
+                    <span style="color:#374151;">m</span>
+                </div>
+
+                <div class="app-breakdown">
+                    <div style="font-weight:600; color:#1f2937; margin-bottom:15px;">Break it down:</div>
+                    
+                    <div class="breakdown-item">
+                        <span>📺 YouTube</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span>👥 Facebook</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span>📸 Instagram</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span>💬 WhatsApp</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span>🎮 Games</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+
+                    <div class="breakdown-item">
+                        <span>📱 Other</span>
+                        <div class="breakdown-inputs">
+                            <input type="number" class="app-h" value="0" min="0" max="24" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">h</span>
+                            <input type="number" class="app-m" value="0" min="0" max="59" oninput="calcBreakdown()">
+                            <span style="font-size:13px; color:#6b7280;">m</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="handleSave()" style="margin-top:20px;">Add to Today's Total 📊</button>
             </div>
 
-            <div id="historyTab" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">📊</div>
-                        <div class="card-title">Last 7 Days History</div>
-                    </div>
-                    <div id="historyList"></div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🎯</div>
+                    <div class="card-title">Today's Challenges</div>
                 </div>
+                <div id="challengesList"></div>
             </div>
 
-            <div id="statsTab" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">🏆</div>
-                        <div class="card-title">Your Stats</div>
-                    </div>
-                    <div style="display: flex; gap: 15px;">
-                        <div style="flex: 1; text-align: center; padding: 20px; background: #f9fafb; border-radius: 12px;">
-                            <div style="font-size: 32px; font-weight: bold; color: #6366f1;" id="totalDays">0</div>
-                            <div style="font-size: 13px; color: #6b7280; margin-top: 5px;">Days Tracked</div>
-                        </div>
-                        <div style="flex: 1; text-align: center; padding: 20px; background: #f9fafb; border-radius: 12px;">
-                            <div style="font-size: 32px; font-weight: bold; color: #10b981;" id="avgTime">0h</div>
-                            <div style="font-size: 13px; color: #6b7280; margin-top: 5px;">Avg Per Day</div>
-                        </div>
-                    </div>
+            <!-- RECOMMENDED TOOLS CARD - NEW! -->
+            <div class="card" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%); border: 2px solid #667eea;">
+                <div class="card-header">
+                    <div class="card-icon">🛠️</div>
+                    <div class="card-title">Recommended Tools</div>
                 </div>
+                <p style="color: #6b7280; margin-bottom: 15px; font-size: 14px;">
+                    Discover products that helped 1000+ people achieve their digital wellness goals!
+                </p>
+                <button class="btn" onclick="window.location.href='tools.html'">
+                    View Recommended Tools →
+                </button>
             </div>
 
-            <div id="settingsTab" class="tab-content">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-icon">⚙️</div>
-                        <div class="card-title">Settings</div>
-                    </div>
-                    <div class="settings-item">
-                        <div class="settings-icon">👤</div>
-                        <div class="settings-info">
-                            <div class="settings-title" id="settingsName">User Name</div>
-                            <div class="settings-desc" id="settingsEmail">email@example.com</div>
-                        </div>
-                    </div>
-                    <div class="settings-item">
-                        <div class="settings-icon">🎯</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Daily Goal</div>
-                            <div class="settings-desc" id="settingsGoal">4 hours per day</div>
-                        </div>
-                    </div>
-                    <div class="settings-item" onclick="showPrivacy()">
-                        <div class="settings-icon">🔒</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Privacy Policy</div>
-                            <div class="settings-desc">View our privacy policy</div>
-                        </div>
-                    </div>
-                    <div class="settings-item" onclick="showTerms()">
-                        <div class="settings-icon">📄</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Terms of Service</div>
-                            <div class="settings-desc">View terms and conditions</div>
-                        </div>
-                    </div>
-                    <div class="settings-item" onclick="clearAllData()" style="background:#fee2e2">
-                        <div class="settings-icon" style="background:#ef4444">🗑️</div>
-                        <div class="settings-info">
-                            <div class="settings-title">Clear All Data</div>
-                            <div class="settings-desc">Delete all your data permanently</div>
-                        </div>
-                    </div>
+        </div>
+
+        <div class="tab-content" id="historyTab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📅</div>
+                    <div class="card-title">7-Day History</div>
+                </div>
+                <div id="historyList"></div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="statsTab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-title">Your Statistics</div>
+                </div>
+                <div style="color:#6b7280; font-size:14px; line-height:1.8;">
+                    <p><strong>Current Goal:</strong> <span id="currentGoal">4</span> hours/day</p>
+                    <p><strong>Total Points:</strong> <span id="totalPoints">0</span></p>
+                    <p><strong>Rank:</strong> #<span id="currentRank">999</span></p>
+                    <p><strong>Challenges Completed:</strong> <span id="totalChallenges">0</span></p>
+                    <p><strong>Current Streak:</strong> <span id="currentStreak">0</span> days 🔥</p>
                 </div>
             </div>
         </div>
 
-        <div id="privacyScreen" class="legal-modal">
-            <div class="legal-content">
-                <button onclick="hidePrivacy()" class="close-legal-btn">✕ Close</button>
-                <h1>Privacy Policy</h1>
-                <p><strong>Last Updated:</strong> January 2025</p>
-                <p>Digital Detox Champion stores all data locally on your device using browser storage.</p>
-                <button onclick="hidePrivacy()" class="close-legal-btn">✕ Close</button>
+        <div class="tab-content" id="settingsTab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">⚙️</div>
+                    <div class="card-title">Settings</div>
+                </div>
+
+                <!-- RECOMMENDED TOOLS IN SETTINGS - NEW! -->
+                <div class="settings-item" onclick="window.location.href='tools.html'" style="background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%); border: 2px solid #667eea;">
+                    <div class="settings-icon">🛠️</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Recommended Tools</div>
+                        <div class="settings-desc">Products to help your digital detox journey</div>
+                    </div>
+                </div>
+
+                <div class="settings-item" onclick="alert('Edit profile feature coming soon!')">
+                    <div class="settings-icon">👤</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Edit Profile</div>
+                        <div class="settings-desc">Update your name and goal</div>
+                    </div>
+                </div>
+
+                <div class="settings-item" onclick="showPrivacy()">
+                    <div class="settings-icon">🔒</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Privacy Policy</div>
+                        <div class="settings-desc">Read our privacy policy</div>
+                    </div>
+                </div>
+
+                <div class="settings-item" onclick="showTerms()">
+                    <div class="settings-icon">📄</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Terms of Service</div>
+                        <div class="settings-desc">Read our terms</div>
+                    </div>
+                </div>
+
+                <div class="settings-item" onclick="clearAllData()">
+                    <div class="settings-icon">🗑️</div>
+                    <div class="settings-info">
+                        <div class="settings-title">Clear All Data</div>
+                        <div class="settings-desc">Delete all your data permanently</div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div id="termsScreen" class="legal-modal">
-            <div class="legal-content">
-                <button onclick="hideTerms()" class="close-legal-btn">✕ Close</button>
-                <h1>Terms of Service</h1>
-                <p><strong>Last Updated:</strong> January 2025</p>
-                <p>By using Digital Detox Champion, you agree to these terms.</p>
-                <button onclick="hideTerms()" class="close-legal-btn">✕ Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        © 2025 Digital Detox Champion | Ages 13+ | 
-        <span onclick="showPrivacy()" style="color:#6366f1;cursor:pointer">Privacy</span> | 
-        <span onclick="showTerms()" style="color:#6366f1;cursor:pointer">Terms</span>
     </div>
 
     <div class="bottom-nav">
@@ -475,178 +488,194 @@
             <div class="nav-label">Settings</div>
         </div>
     </div>
+</div>
 
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-    <div class="popup" id="popup">
-        <div class="popup-icon" id="popupIcon">🎉</div>
-        <h2 style="color: #1f2937; margin-bottom: 10px;" id="popupTitle">Great!</h2>
-        <p style="color: #6b7280;" id="popupMessage"></p>
-        <button class="btn" onclick="closePopup()" style="margin-top: 20px;">Awesome!</button>
+<div id="privacyScreen" class="legal-modal">
+    <div class="legal-header">
+        <h2>Privacy Policy</h2>
+        <button onclick="hidePrivacy()" style="background:white; color:#667eea; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; float:right; margin-top:-5px;">Close</button>
     </div>
+    <div class="legal-content">
+        <p><strong>Last Updated:</strong> January 2026</p>
+        
+        <h2>Data Collection</h2>
+        <p>This app stores all data locally on your device using browser local storage. We do not collect or transmit any personal data to external servers.</p>
+        
+        <h2>Information Stored</h2>
+        <p>The following information is stored locally on your device:</p>
+        <p>• Your name and email (as entered by you)<br>
+        • Daily screen time logs<br>
+        • Challenge completion status<br>
+        • Points and statistics</p>
+        
+        <h2>Data Security</h2>
+        <p>Your data remains on your device and is never transmitted to us or third parties. You have full control to delete all data at any time via the Settings menu.</p>
+        
+        <h2>Contact</h2>
+        <p>For questions about this privacy policy, please contact us through the app.</p>
+    </div>
+</div>
 
-    <script>
-function safeLocalStorage() {
+<div id="termsScreen" class="legal-modal">
+    <div class="legal-header">
+        <h2>Terms of Service</h2>
+        <button onclick="hideTerms()" style="background:white; color:#667eea; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; float:right; margin-top:-5px;">Close</button>
+    </div>
+    <div class="legal-content">
+        <p><strong>Last Updated:</strong> January 2026</p>
+        
+        <h2>Acceptance of Terms</h2>
+        <p>By using Digital Detox Champion, you agree to these terms of service.</p>
+        
+        <h2>Use of Service</h2>
+        <p>This app is provided as-is for personal use to help manage screen time. We make no guarantees about the effectiveness of the app for reducing screen time.</p>
+        
+        <h2>User Responsibilities</h2>
+        <p>You are responsible for:</p>
+        <p>• Providing accurate information<br>
+        • Backing up your data if desired<br>
+        • Using the app responsibly</p>
+        
+        <h2>Disclaimer</h2>
+        <p>This app is not a substitute for professional medical or mental health advice. If you have concerns about technology addiction, please consult a healthcare professional.</p>
+        
+        <h2>Changes to Terms</h2>
+        <p>We reserve the right to modify these terms at any time. Continued use of the app constitutes acceptance of updated terms.</p>
+    </div>
+</div>
+
+<div id="overlay" class="overlay" onclick="closePopup()"></div>
+<div id="popup" class="popup">
+    <div class="popup-icon" id="popupIcon">🎉</div>
+    <h2 id="popupTitle">Great!</h2>
+    <p id="popupMessage" style="color:#6b7280; margin:20px 0;"></p>
+    <button class="btn" onclick="closePopup()">Got it!</button>
+</div>
+
+<div class="footer">
+    <p>© 2026 Digital Detox Champion | Ages 13+ | <a href="#" onclick="showPrivacy(); return false;">Privacy</a> | <a href="#" onclick="showTerms(); return false;">Terms</a></p>
+</div>
+
+<script>
+var userData = {
+    name: '',
+    email: '',
+    goal: 4,
+    points: 0,
+    streak: 0,
+    rank: 999,
+    challenges: 0,
+    days: {}
+};
+
+var challengesData = [
+    {id:1, title:'2-Hour Phone-Free Focus', desc:'No phone for 2 hours', points:130},
+    {id:2, title:'Phone-Free Dinner', desc:'Enjoy meals without phone', points:50},
+    {id:3, title:'Bedtime Digital Detox', desc:'1 hour before sleep', points:75},
+    {id:4, title:'Morning Without Phone', desc:'Start day phone-free', points:60}
+];
+
+function saveData(key, val) {
     try {
-        const test = '__test__';
-        localStorage.setItem(test, test);
-        localStorage.removeItem(test);
-        return true;
-    } catch(e) {
-        return false;
-    }
-}
-
-const hasLocalStorage = safeLocalStorage();
-
-function saveData(key, value) {
-    if (hasLocalStorage) {
-        try {
-            localStorage.setItem(key, JSON.stringify(value));
-            return true;
-        } catch(e) {
-            console.warn('localStorage save failed:', e);
-            return false;
-        }
-    }
-    return false;
+        localStorage.setItem(key, JSON.stringify(val));
+    } catch(e) {}
 }
 
 function loadData(key) {
-    if (hasLocalStorage) {
-        try {
-            const data = localStorage.getItem(key);
-            return data ? JSON.parse(data) : null;
-        } catch(e) {
-            console.warn('localStorage load failed:', e);
-            return null;
-        }
+    try {
+        var item = localStorage.getItem(key);
+        return item ? JSON.parse(item) : null;
+    } catch(e) {
+        return null;
     }
-    return null;
 }
 
 function removeData(key) {
-    if (hasLocalStorage) {
-        try {
-            localStorage.removeItem(key);
-            return true;
-        } catch(e) {
-            return false;
-        }
-    }
-    return false;
+    try {
+        localStorage.removeItem(key);
+    } catch(e) {}
 }
-
-var userData = {name:'',email:'',goal:4,points:0,streak:0,rank:999,challenges:0,days:{}};
-var challenges = [
-    {id:1,title:"2-Hour Phone-Free Focus",desc:"No phone for 2 hours",points:100,icon:"💼"},
-    {id:2,title:"Phone-Free Dinner",desc:"Enjoy meals without phone",points:50,icon:"🍽️"},
-    {id:3,title:"Bedtime Digital Detox",desc:"1 hour before sleep",points:75,icon:"🌙"},
-    {id:4,title:"Morning Without Phone",desc:"Start day phone-free",points:60,icon:"🌅"}
-];
 
 function getToday() {
     var d = new Date();
-    return d.getFullYear() + '-' + 
-           String(d.getMonth() + 1).padStart(2, '0') + '-' + 
-           String(d.getDate()).padStart(2, '0');
-}
-
-function validateHours(el) {
-    var v = parseInt(el.value) || 0;
-    if (v < 0) v = 0;
-    if (v > 24) v = 24;
-    el.value = v;
-}
-
-function validateMins(el) {
-    var v = parseInt(el.value) || 0;
-    if (v < 0) v = 0;
-    if (v > 59) v = 59;
-    el.value = v;
+    return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
 }
 
 function cleanOldDays() {
-    var cutoff = new Date();
-    cutoff.setDate(cutoff.getDate() - 7);
+    var cutoff = Date.now() - (7 * 24 * 60 * 60 * 1000);
     var newDays = {};
-    for (var date in userData.days) {
-        if (new Date(date) >= cutoff) {
-            newDays[date] = userData.days[date];
+    for (var k in userData.days) {
+        var parts = k.split('-');
+        var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+        if (d.getTime() >= cutoff) {
+            newDays[k] = userData.days[k];
         }
     }
     userData.days = newDays;
 }
 
-function updateTodayDisplay() {
-    var today = getToday();
-    var dd = userData.days[today] || {total:0};
-    var h = Math.floor(dd.total / 60);
-    var m = dd.total % 60;
-    document.getElementById('todayTotal').textContent = h + 'h ' + m + 'm';
-}
-
 function updateUI() {
-    document.getElementById('displayName').textContent = userData.name || 'Champion';
-    document.getElementById('totalPoints').textContent = userData.points;
-    document.getElementById('currentStreak').textContent = userData.streak;
-    document.getElementById('globalRank').textContent = userData.rank;
-    document.getElementById('challengesDone').textContent = userData.challenges;
-    document.getElementById('settingsName').textContent = userData.name || 'User';
-    document.getElementById('settingsEmail').textContent = userData.email || 'email@example.com';
-    document.getElementById('settingsGoal').textContent = userData.goal + ' hours per day';
-    updateTodayDisplay();
+    document.getElementById('userName2').textContent = userData.name;
+    document.getElementById('points').textContent = userData.points;
+    document.getElementById('dayStreak').textContent = userData.streak;
+    document.getElementById('personalScore').textContent = '#' + userData.rank;
+    document.getElementById('challenges').textContent = userData.challenges;
     
-    var dc = Object.keys(userData.days).length;
-    document.getElementById('totalDays').textContent = dc;
-    var tm = 0;
-    for (var d in userData.days) { tm += userData.days[d].total; }
-    var avg = dc > 0 ? (tm / 60 / dc).toFixed(1) : 0;
-    document.getElementById('avgTime').textContent = avg + 'h';
+    document.getElementById('currentGoal').textContent = userData.goal;
+    document.getElementById('totalPoints').textContent = userData.points;
+    document.getElementById('currentRank').textContent = userData.rank;
+    document.getElementById('totalChallenges').textContent = userData.challenges;
+    document.getElementById('currentStreak').textContent = userData.streak;
+    
+    var today = getToday();
+    var t = (userData.days[today] && userData.days[today].total) || 0;
+    var h = Math.floor(t / 60);
+    var m = t % 60;
+    document.getElementById('todayTotal').textContent = h + 'h ' + m + 'm';
 }
 
 function renderChallenges() {
     var html = '';
-    for (var i = 0; i < challenges.length; i++) {
-        var c = challenges[i];
-        html += '<div class="challenge-item" id="ch' + c.id + '">' +
-                '<div class="challenge-header">' +
-                '<div class="challenge-title">' + c.icon + ' ' + c.title + '</div>' +
-                '<div class="challenge-points">+' + c.points + ' pts</div>' +
-                '</div>' +
-                '<div class="challenge-desc">' + c.desc + '</div>' +
-                '<div class="challenge-actions">' +
-                '<button class="btn-small btn-complete" onclick="completeChallenge(' + c.id + ',' + c.points + ')">✓ Completed</button>' +
-                '<button class="btn-small btn-fail" onclick="failChallenge(' + c.id + ')">✗ Failed</button>' +
-                '</div></div>';
+    for (var i = 0; i < challengesData.length; i++) {
+        var c = challengesData[i];
+        html += '<div class="challenge-item" id="ch' + c.id + '">';
+        html += '<div class="challenge-header">';
+        html += '<div class="challenge-title">' + c.title + '</div>';
+        html += '<div class="challenge-points">+' + c.points + ' pts</div>';
+        html += '</div>';
+        html += '<div class="challenge-desc">' + c.desc + '</div>';
+        html += '<div class="challenge-actions">';
+        html += '<button class="btn-small btn-complete" onclick="completeChallenge(' + c.id + ',' + c.points + ')">✓ Completed</button>';
+        html += '<button class="btn-small btn-fail" onclick="failChallenge(' + c.id + ')">✗ Failed</button>';
+        html += '</div></div>';
     }
     document.getElementById('challengesList').innerHTML = html;
 }
 
 function renderHistory() {
-    var dates = [];
-    for (var d in userData.days) { dates.push(d); }
-    dates.sort().reverse();
-    
     var html = '';
-    if (dates.length === 0) {
-        html = '<p style="color:#6b7280;text-align:center;padding:20px;">No data yet!</p>';
+    var keys = Object.keys(userData.days).sort().reverse();
+    
+    if (keys.length === 0) {
+        html = '<p style="color:#6b7280; text-align:center; padding:20px;">No history yet. Start logging your screen time!</p>';
     } else {
         var apps = ['youtube','facebook','instagram','whatsapp','games','other'];
-        var icons = ['📺','📘','📸','💬','🎮','📱'];
+        var icons = ['📺','👥','📸','💬','🎮','📱'];
         var names = ['YouTube','Facebook','Instagram','WhatsApp','Games','Other'];
         
-        for (var i = 0; i < dates.length; i++) {
-            var date = dates[i];
-            var data = userData.days[date];
-            var d = new Date(date);
-            var ds = d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
-            var th = (data.total / 60).toFixed(1);
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            var data = userData.days[k];
+            var parts = k.split('-');
+            var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+            var dateStr = d.toLocaleDateString('en-US', {weekday:'short', month:'short', day:'numeric'});
             
-            html += '<div class="day-entry">' +
-                    '<div class="day-header">' +
-                    '<div class="day-date">' + ds + '</div>' +
-                    '<div class="day-total">' + th + 'h</div>' +
-                    '</div><div class="day-apps">';
+            html += '<div class="day-entry">';
+            html += '<div class="day-header">';
+            html += '<div class="day-date">' + dateStr + '</div>';
+            html += '<div class="day-total">' + (data.total / 60).toFixed(1) + 'h</div>';
+            html += '</div>';
+            html += '<div class="day-apps">';
             
             for (var j = 0; j < apps.length; j++) {
                 if (data[apps[j]] && data[apps[j]] > 0) {
@@ -858,11 +887,11 @@ window.onload = function() {
         saveData('detoxData', userData);
         document.getElementById('welcomeScreen').classList.remove('active');
         document.getElementById('mainApp').classList.add('active');
+        updateUI();
+        renderChallenges();
     }
-    updateUI();
-    renderChallenges();
-    renderHistory();
 };
-    </script>
+</script>
+
 </body>
 </html>
